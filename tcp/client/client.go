@@ -4,6 +4,8 @@ import (
 	"log"
 	"net"
 	"os"
+	"os/signal"
+	"syscall"
 	"time"
 
 	"github.com/pkg/errors"
@@ -17,6 +19,7 @@ const (
 func main() {
 	// Создание канала для обработки сигнала
 	signalChan := make(chan os.Signal, 1)
+	signal.Notify(signalChan, syscall.SIGTERM, syscall.SIGINT)
 
 	// Подключение к серверу по адресу "localhost:8080"
 	connection, err := net.Dial("tcp", address)
@@ -57,7 +60,7 @@ func main() {
 		return
 	}
 
-	log.Println("the word ", stopWord, " was reply to server. connection will be closed")
+	log.Println("the word", stopWord, "was sent to server. connection will be closed")
 
 	log.Println("the programm ends. close the connection")
 }
