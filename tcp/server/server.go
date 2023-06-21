@@ -9,20 +9,17 @@ import (
 )
 
 const (
-	address = "localhost"
-	port    = "8080"
+	address = "localhost:9091"
 )
 
 func main() {
-	listenAddress := fmt.Sprintf("%s:%s", address, port)
-
-	listener, err := net.Listen("tcp", listenAddress)
+	listener, err := net.Listen("tcp", address)
 	if err != nil {
 		panic(errors.Wrapf(err, "can not listen connection"))
 	}
 	defer listener.Close()
 
-	fmt.Println("server already exists and listen at", listenAddress)
+	fmt.Println("server already exists and listen at", address)
 
 	for {
 		connection, err := listener.Accept()
@@ -41,7 +38,7 @@ func handleConnection(connection net.Conn) {
 	defer connection.Close()
 
 	addressOfClient := connection.RemoteAddr().String()
-	fmt.Println("connection with client already exists", addressOfClient)
+	log.Print("connected with client:", addressOfClient)
 
 	bufferWindow := make([]byte, 1024)
 
