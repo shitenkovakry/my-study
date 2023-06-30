@@ -23,10 +23,10 @@ func main() {
 
 	//создание нового сервера grpc
 	serverOfGrpc := grpc.NewServer()
-	server := roiute.New()
+	roiuteServer := roiute.New()
 
 	// регистрация службы на сервере
-	mygrpc.RegisterRoiuteMessageServer(serverOfGrpc, server)
+	mygrpc.RegisterRoiuteMessageServer(serverOfGrpc, roiuteServer)
 
 	log.Println("server started, listening on ", address)
 
