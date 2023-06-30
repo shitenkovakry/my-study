@@ -1,13 +1,37 @@
 package main
 
-import "my-study/mygrpc"
+import (
+	"log"
+	"my-study/mygrpc"
+	"my-study/roiute"
+	"net"
 
-//import "context"
+	"github.com/pkg/errors"
+	"google.golang.org/grpc"
+)
 
-type Server struct{}
-
-//func (server *Server) SayHello(ctx context.Context, request )
+const (
+	address = ":8080"
+)
 
 func main() {
-	mygrpc.RegisterRoiuteMessageServer()
+	// создание tcp прослушивателя
+	listen, err := net.Listen("tcp", address)
+	if err != nil {
+		log.Print(errors.Wrapf(err, "can not listen"))
+	}
+
+	//создание нового сервера grpc
+	serverOfGrpc := grpc.NewServer()
+	server := roiute.New()
+
+	// регистрация службы на сервере
+	mygrpc.RegisterRoiuteMessageServer(serverOfGrpc, server)
+
+	log.Println("server started, listening on ", address)
+
+	// запуск сервера grpc для прослушивания соединений
+	if err := serverOfGrpc.Serve(listen); err != nil {
+		log.Print(errors.Wrapf(err, "failed to serve"))
+	}
 }
