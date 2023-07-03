@@ -2,7 +2,7 @@ package main
 
 import (
 	"log"
-	mygrpc "my-study/mygrpc/forServer"
+	mygrpc "my-study/mygrpc"
 	"my-study/roiute"
 	"net"
 

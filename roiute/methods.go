@@ -2,7 +2,8 @@ package roiute
 
 import (
 	"context"
-	mygrpc "my-study/mygrpc/forServer"
+	"fmt"
+	mygrpc "my-study/mygrpc"
 )
 
 type Server struct {
@@ -13,17 +14,9 @@ func New() *Server {
 	return &Server{}
 }
 
-func (server *Server) GetMessage(ctx context.Context, request *mygrpc.HelloRequest) (*mygrpc.HelloResponse, error) {
+func (server *Server) SayHello(ctx context.Context, request *mygrpc.HelloRequest) (*mygrpc.HelloResponse, error) {
 	response := &mygrpc.HelloResponse{
-		Message: "Hello, " + request.Name,
-	}
-
-	return response, nil
-}
-
-func (server *Server) PostMessage(ctx context.Context, request *mygrpc.HelloRequest) (*mygrpc.HelloResponse, error) {
-	response := &mygrpc.HelloResponse{
-		Message: "Recieved message: " + request.Message,
+		Message: fmt.Sprintf("Hello, %s. You said: %s", request.Name, request.Message),
 	}
 
 	return response, nil
