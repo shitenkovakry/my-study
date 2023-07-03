@@ -2,7 +2,7 @@ package roiute
 
 import (
 	"context"
-	"my-study/mygrpc"
+	mygrpc "my-study/mygrpc/forServer"
 )
 
 type Server struct {
