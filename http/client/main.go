@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 
 	"github.com/pkg/errors"
@@ -30,7 +30,7 @@ func main() {
 	defer response.Body.Close()
 
 	// читаем тело ответа
-	body, err := ioutil.ReadAll(response.Body)
+	body, err := io.ReadAll(response.Body)
 	if err != nil {
 		fmt.Println(errors.Wrapf(err, "can not read answer from the server"))
 
