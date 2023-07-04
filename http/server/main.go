@@ -10,7 +10,7 @@ const (
 )
 
 func helloHandler(writer http.ResponseWriter, request *http.Request) {
-	fmt.Println("Hello, client")
+	fmt.Fprintln(writer, "Hello, client")
 }
 
 func main() {
@@ -20,5 +20,8 @@ func main() {
 		fmt.Fprint(writer, "this is information about the server")
 	})
 
-	http.ListenAndServe(address, nil)
+	err := http.ListenAndServe(address, nil)
+	if err != nil {
+		fmt.Println(err)
+	}
 }
